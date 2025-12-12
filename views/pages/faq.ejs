@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+          Frequently Asked <span class="text-gradient">Questions</span>
+        </h1>
+        <p class="mt-3 text-xl text-gray-500">
+          Quick answers to the most common questions about the Minerva Metrics Hub.
+        </p>
+        <a href="/help" class="mt-4 inline-flex items-center text-purple-600 hover:text-purple-800 transition font-medium">
+          <i class="fas fa-arrow-left mr-2"></i> Back to Help Center
+        </a>
+      </div>
+    
+      <div class="space-y-6" id="faq-accordion">
+        <!-- FAQ 1 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>What is Minerva Metrics Hub?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>Minerva Metrics Hub is a secure, vetted platform designed exclusively for marketing agencies to collaborate. It allows agencies to find trusted partners for overflow work, specialized services, and joint ventures, all within a transparent and compliant framework.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 2 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>How is my agency verified?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>Every agency goes through a mandatory verification process after registration. Our admin team reviews your provided details, website, and business information to ensure you are a legitimate, active agency. This process is crucial for maintaining a high-trust environment.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 3 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>How do partnerships work?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>An agency posts a project request (e.g., "Need a TikTok expert for a 3-month campaign"). Other agencies submit a response detailing their qualifications. The posting agency selects a partner, and they proceed to collaborate off-platform, with the Hub providing the initial trusted connection and review system.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 4 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>Are there fees to use the platform?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>We offer a Free tier with limited usage (1 project post, 5 responses per month). For unlimited collaboration, you can upgrade to our Pro or Premium subscription tiers. There are no commission fees on projects completed between partners.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 5 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>What happens if a partner doesn't respond?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>If a partner is unresponsive after a project is awarded, you should first attempt contact via their provided email. If the issue persists, you can report the agency to our admin team via the support ticket system. Agencies with a history of unresponsiveness may have their approval revoked.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 6 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>Can I cancel my subscription anytime?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>Yes, you can cancel your Pro or Premium subscription at any time from your dashboard settings. Your account will remain active at the paid tier until the end of the current billing cycle, after which it will revert to the Free tier.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 7 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>How does the rating system work?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>The rating system is a 1-to-5 star scale. After a project is closed, both the posting and responding agencies can rate each other based on communication, professionalism, and quality of work. Your overall rating is the average of all reviews received.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 8 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>Are my project details confidential?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>Yes. Project details are only visible to approved agencies on the platform. We strongly recommend that agencies execute a Non-Disclosure Agreement (NDA) before sharing highly sensitive information, even with a vetted partner.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 9 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>Can freelancers join the Hub?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>The Minerva Metrics Hub is exclusively for established marketing agencies (defined as having a registered business entity). We do not currently support individual freelancers to maintain the quality and compliance standards required for agency-to-agency collaboration.</p>
+          </div>
+        </div>
+    
+        <!-- FAQ 10 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <button class="w-full text-left p-6 font-bold text-lg text-gray-900 flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleAccordion(this)">
+            <span>Is Stripe required for paid plans?</span>
+            <i class="fas fa-chevron-down text-purple-600 transition-transform duration-300"></i>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-gray-600 border-t border-gray-100">
+            <p>Yes, our paid subscription plans (Pro and Premium) are processed securely through Stripe. You will need a valid credit card to complete the checkout process for these tiers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+    
+    // Accordion Logic
+    function toggleAccordion(button) {
+      const content = button.nextElementSibling;
+      const icon = button.querySelector("i");
+      
+      // Close all other open accordions
+      document.querySelectorAll(".accordion-content").forEach(item => {
+        if (item !== content && !item.classList.contains("hidden")) {
+          item.classList.add("hidden");
+          item.previousElementSibling.querySelector("i").classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle the clicked accordion
+      content.classList.toggle("hidden");
+      icon.classList.toggle("rotate-180");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Ticket #<%= ticket.id %>: <span class="text-gradient"><%= ticket.title %></span></h1>
+        <div class="flex space-x-3">
+          <a href="/admin/tickets" class="py-2 px-4 bg-gray-200 text-gray-800 rounded-xl shadow-md hover:bg-gray-300 transition">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Tickets
+          </a>
+          
+          <!-- Delete Button -->
+          <form action="/admin/tickets/<%= ticket.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this ticket and all its responses?');">
+            <button type="submit" class="py-2 px-4 bg-red-600 text-white rounded-xl shadow-md hover:bg-red-700 transition">
+              <i class="fas fa-trash mr-2"></i>Delete Ticket
+            </button>
+          </form>
+        </div>
+      </div>
+    
+      <!-- Ticket Details -->
+      <div class="bg-white shadow-lg rounded-xl p-6 mb-8 border border-gray-100">
+        <div class="grid grid-cols-2 gap-4 text-gray-600 border-b pb-4 mb-4">
+          <div>
+            <p class="font-medium text-gray-900">Agency:</p>
+            <p><%= ticket.agency_name %></p>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Category:</p>
+            <p><%= ticket.category %></p>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Created:</p>
+            <p><%= new Date(ticket.created_at).toLocaleString() %></p>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Status:</p>
+            <% let statusClass = '';
+               if (ticket.status === 'open') statusClass = 'bg-green-100 text-green-800';
+               else if (ticket.status === 'in_progress') statusClass = 'bg-blue-100 text-blue-800';
+               else if (ticket.status === 'resolved') statusClass = 'bg-purple-100 text-purple-800';
+               else statusClass = 'bg-gray-100 text-gray-800';
+            %>
+            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full <%= statusClass %>">
+              <%= ticket.status.replace('_', ' ') %>
+            </span>
+          </div>
+        </div>
+    
+        <!-- Status Update Form -->
+        <div class="mt-4 border-t pt-4">
+          <h3 class="font-medium text-gray-900 mb-2">Update Status:</h3>
+          <form action="/admin/tickets/<%= ticket.id %>/status" method="POST" class="flex space-x-4 items-center">
+            <select name="status" class="rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition">
+              <option value="open" <%= ticket.status === 'open' ? 'selected' : '' %>>Open</option>
+              <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+              <option value="resolved" <%= ticket.status === 'resolved' ? 'selected' : '' %>>Resolved</option>
+              <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>>Closed</option>
+            </select>
+            <button type="submit" class="py-2 px-4 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 transition">
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+    
+      <!-- Responses -->
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Conversation History</h2>
+      <div class="space-y-6">
+        <% responses.forEach(response => { %>
+          <% const isAdmin = response.user_type === 'admin'; %>
+          <div class="flex <%= isAdmin ? 'justify-end' : 'justify-start' %>">
+            <div class="max-w-lg w-full">
+              <div class="text-xs mb-1 <%= isAdmin ? 'text-right text-blue-600' : 'text-left text-purple-600' %>">
+                <%= isAdmin ? 'Admin' : 'Agency' %> • <%= new Date(response.created_at).toLocaleString() %>
+              </div>
+              <div class="p-4 rounded-xl shadow-md <%= isAdmin ? 'bg-blue-50 text-gray-800 border border-blue-200' : 'bg-purple-50 text-gray-800 border border-purple-200' %>">
+                <p class="whitespace-pre-wrap"><%= response.message %></p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    
+      <!-- Reply Form -->
+      <% if (ticket.status !== 'closed') { %>
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Reply to Ticket</h2>
+          <form action="/admin/tickets/<%= ticket.id %>/respond" method="POST" class="space-y-4">
+            <div>
+              <textarea name="message" id="message" rows="4" required placeholder="Type your response here..." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition"></textarea>
+            </div>
+            <button type="submit" class="py-2 px-4 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition">
+              Send Response
+            </button>
+          </form>
+        </div>
+      <% } else { %>
+        <div class="mt-8 pt-8 border-t border-gray-200 text-center">
+          <p class="text-xl text-gray-500">This ticket is closed. No further replies can be sent.</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- Cookie Banner Script -->
+  <script>
+    // Cookie Banner Logic (omitted for brevity)
+  </script>
+</body>
+</html>

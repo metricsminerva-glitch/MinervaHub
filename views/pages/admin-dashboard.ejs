@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-4xl font-black text-gray-900 mb-2">
+        <i class="fas fa-shield-alt text-purple-600 mr-3"></i>Admin <span class="text-gradient">Dashboard</span>
+      </h1>
+      <p class="text-gray-600">Monitor and manage the Minerva Metrics Hub</p>
+    </div>
+    <div class="flex gap-3">
+      <a href="/" class="px-4 py-2 bg-white border-2 border-gray-200 text-gray-700 rounded-xl font-semibold hover:border-purple-300 transition">
+        <i class="fas fa-external-link-alt mr-2"></i>View Site
+      </a>
+      <a href="/admin/logout" class="px-4 py-2 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition">
+        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid md:grid-cols-3 gap-6 mb-8">
+    <!-- Agencies Stat -->
+    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+          <i class="fas fa-building text-2xl text-white"></i>
+        </div>
+        <span class="text-4xl font-black text-gray-900"><%= stats.agencies %></span>
+      </div>
+      <p class="text-gray-600 font-semibold mb-2">Total Agencies</p>
+      <% if (stats.pendingAgencies > 0) { %>
+        <div class="flex items-center text-orange-600 text-sm font-semibold">
+          <i class="fas fa-exclamation-circle mr-2"></i>
+          <%= stats.pendingAgencies %> pending approval
+        </div>
+      <% } else { %>
+        <p class="text-sm text-gray-500">All agencies processed</p>
+      <% } %>
+    </div>
+
+    <!-- Projects Stat -->
+    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+          <i class="fas fa-project-diagram text-2xl text-white"></i>
+        </div>
+        <span class="text-4xl font-black text-gray-900"><%= stats.projects %></span>
+      </div>
+      <p class="text-gray-600 font-semibold mb-2">Total Projects</p>
+      <p class="text-sm text-gray-500"><%= stats.openProjects %> currently open</p>
+    </div>
+
+    <!-- Responses & Reviews Stat -->
+    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+          <i class="fas fa-reply text-2xl text-white"></i>
+        </div>
+        <span class="text-4xl font-black text-gray-900"><%= stats.responses %></span>
+      </div>
+      <p class="text-gray-600 font-semibold mb-2">Total Responses</p>
+      <p class="text-sm text-gray-500"><%= stats.reviews %> reviews submitted</p>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid md:grid-cols-4 gap-6 mb-8">
+    <!-- Pending Agencies -->
+    <a href="/admin/agencies?status=pending" class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition card-hover text-center group">
+      <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+        <i class="fas fa-user-clock text-3xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2">Pending Agencies</h3>
+      <p class="text-4xl font-black"><%= stats.pendingAgencies %></p>
+    </a>
+
+    <!-- All Agencies -->
+    <a href="/admin/agencies" class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition card-hover text-center group">
+      <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+        <i class="fas fa-users text-3xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2">All Agencies</h3>
+      <p class="text-4xl font-black"><%= stats.agencies %></p>
+    </a>
+
+    <!-- Projects -->
+    <a href="/admin/projects" class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition card-hover text-center group">
+      <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+        <i class="fas fa-tasks text-3xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2">Projects</h3>
+      <p class="text-4xl font-black"><%= stats.projects %></p>
+    </a>
+
+    <!-- Tickets -->
+    <a href="/admin/tickets" class="bg-gradient-to-br from-cyan-500 to-cyan-600 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition card-hover text-center group">
+      <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+        <i class="fas fa-life-ring text-3xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2">Open Tickets</h3>
+      <p class="text-4xl font-black"><%= stats.openTickets %></p>
+    </a>
+
+    <!-- Reviews -->
+    <a href="/admin/reviews" class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition card-hover text-center group">
+      <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+        <i class="fas fa-star text-3xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2">Reviews</h3>
+      <p class="text-4xl font-black"><%= stats.reviews %></p>
+    </a>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+        <i class="fas fa-history text-purple-600 mr-3"></i>Recent Activity
+      </h2>
+    </div>
+    
+    <% if (recentActivity.length > 0) { %>
+      <div class="space-y-4">
+        <% recentActivity.forEach(activity => { %>
+          <div class="border-2 border-gray-100 rounded-xl p-4 hover:border-purple-200 transition">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+              <div class="flex-1">
+                <p class="font-semibold text-gray-900">
+                  <% if (activity.agency_name) { %>
+                    <span class="text-purple-600"><%= activity.agency_name %></span>
+                  <% } else { %>
+                    <span class="text-gray-600">System</span>
+                  <% } %>
+                  <span class="text-gray-700 mx-2">•</span>
+                  <span class="text-gray-700 capitalize"><%= activity.action.replace(/_/g, ' ') %></span>
+                </p>
+                <% if (activity.metadata_json) { %>
+                  <p class="text-sm text-gray-500 mt-1">
+                    <%
+                      try {
+                        const data = JSON.parse(activity.metadata_json);
+                        const parts = [];
+                        if (data.email) parts.push(`Email: ${data.email}`);
+                        if (data.admin_email) parts.push(`Admin: ${data.admin_email}`);
+                        if (data.title && data.project_id) parts.push(`Project: ${data.title} (ID: ${data.project_id})`);
+                        else if (data.title) parts.push(`Title: ${data.title}`);
+                        else if (data.project_id) parts.push(`Project ID: ${data.project_id}`);
+                        if (data.status) parts.push(`Status: ${data.status}`);
+                        if (data.reason) parts.push(`Reason: ${data.reason}`);
+                        if (data.message) parts.push(`Message: ${data.message}`);
+                        if (parts.length > 0) {
+                    %><%= parts.join(' • ') %><%
+                        } else {
+                    %>Data unavailable<%
+                        }
+                      } catch (e) {
+                    %>Data unavailable<%
+                      }
+                    %>
+                  </p>
+                <% } %>
+              </div>
+              <span class="text-sm text-gray-500 whitespace-nowrap flex items-center">
+                <i class="fas fa-clock mr-2"></i>
+                <%= new Date(activity.created_at).toLocaleString() %>
+              </span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="text-center py-12">
+        <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-inbox text-4xl text-gray-400"></i>
+        </div>
+        <p class="text-gray-500 font-semibold">No recent activity</p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>
+

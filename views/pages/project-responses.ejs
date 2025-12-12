@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="mb-8">
+    <a href="/projects/my" class="text-blue-600 hover:underline mb-4 inline-block">
+      <i class="fas fa-arrow-left"></i> Back to My Projects
+    </a>
+    <div class="flex items-center gap-3">
+      <h1 class="text-3xl font-bold">Responses for: <%= project.title %></h1>
+      <% if (project.hide_identity === 1) { %>
+        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold">
+          <i class="fas fa-eye-slash mr-1"></i>Identity Hidden
+        </span>
+      <% } %>
+    </div>
+    <p class="text-gray-600 mt-2"><%= responses.length %> <%= responses.length === 1 ? 'response' : 'responses' %></p>
+  </div>
+
+  <% if (responses.length > 0) { %>
+    <div class="space-y-6">
+      <% responses.forEach(response => { %>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="text-xl font-bold mb-2">
+                <a href="/agencies/<%= response.responder_agency_id %>" class="text-blue-600 hover:underline">
+                  <%= response.agency_name %>
+                </a>
+              </h3>
+              <div class="flex items-center space-x-4 text-sm text-gray-500">
+                <span>
+                  <i class="fas fa-star text-yellow-500"></i> 
+                  <%= response.rating_average ? response.rating_average.toFixed(1) : 'N/A' %>
+                </span>
+                <% if (response.website) { %>
+                  <span>
+                    <i class="fas fa-globe"></i> 
+                    <a href="<%= response.website %>" target="_blank" class="hover:text-blue-600"><%= response.website %></a>
+                  </span>
+                <% } %>
+                <span>
+                  <i class="fas fa-calendar"></i> 
+                  <%= new Date(response.created_at).toLocaleDateString() %>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="font-bold mb-2">Message:</h4>
+            <p class="text-gray-700 whitespace-pre-wrap"><%= response.message %></p>
+          </div>
+
+          <div class="border-t pt-4">
+            <p class="text-sm text-gray-600">
+              <strong>Contact:</strong> 
+              <a href="mailto:<%= response.contact_email %>" class="text-blue-600 hover:underline">
+                <%= response.contact_email %>
+              </a>
+            </p>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <a href="mailto:<%= response.contact_email %>" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+              <i class="fas fa-envelope"></i> Contact Agency
+            </a>
+            <a href="/agencies/<%= response.responder_agency_id %>" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300">
+              <i class="fas fa-user"></i> View Profile
+            </a>
+            <a href="/reviews/create?target=<%= response.responder_agency_id %>&project=<%= project.id %>" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+              <i class="fas fa-star"></i> Leave Review
+            </a>
+            <% if (project.hide_identity === 1 && !response.is_revealed) { %>
+              <form action="/projects/<%= project.id %>/reveal/<%= response.responder_agency_id %>" method="POST" style="display: inline;">
+                <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700">
+                  <i class="fas fa-eye mr-1"></i> Reveal Identity
+                </button>
+              </form>
+            <% } %>
+            <% if (project.hide_identity === 1 && response.is_revealed) { %>
+              <span class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-semibold">
+                <i class="fas fa-check-circle mr-1"></i> Identity Revealed
+              </span>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="bg-white rounded-lg shadow-md p-12 text-center">
+      <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+      <p class="text-xl text-gray-500">No responses yet</p>
+      <p class="text-gray-600 mt-2">Check back later for responses from other agencies</p>
+    </div>
+  <% } %>
+<    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>
+

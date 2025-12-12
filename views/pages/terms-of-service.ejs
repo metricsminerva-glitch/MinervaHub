@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl mb-4">
+          Terms of Service
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+          Effective Date: December 1, 2025
+        </p>
+      </div>
+    
+      <!-- Policy Content Section -->
+      <div class="mt-16 space-y-8 text-gray-700">
+        <p>Welcome to Minerva Metrics Hub, operated by Minerva Metrics Pte. Ltd. ("we," "our," or "us"). By accessing or using our platform, you agree to be bound by these Terms of Service ("Terms").</p>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">1. Acceptance of Terms</h2>
+          <p>By registering for an account or using the Hub, you confirm that you are a legitimate, registered business entity (marketing agency) and agree to these Terms. If you do not agree, you may not use the Hub.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">2. Eligibility and Verification</h2>
+          <p>The Hub is exclusively for established marketing agencies. We reserve the right to approve or reject any registration at our sole discretion. You agree to provide accurate, complete, and current information during the registration and verification process.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">3. User Responsibilities</h2>
+          <p>You agree not to:</p>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>Use the Hub for any illegal or unauthorized purpose.</li>
+            <li>Post false, misleading, or fraudulent project requests or responses.</li>
+            <li>Harass, abuse, or harm another person or agency.</li>
+            <li>Attempt to gain unauthorized access to the Hub's systems or data.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">4. Collaboration and Projects</h2>
+          <p>The Hub acts solely as a platform to connect agencies. We are not a party to any agreement or contract between agencies. You are solely responsible for:</p>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>Vetting your chosen partners beyond the Hub's verification.</li>
+            <li>Negotiating and executing all contracts, NDAs, and payment terms.</li>
+            <li>The quality and legality of the work performed.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">5. Subscription and Payment</h2>
+          <p>Access to certain features requires a paid subscription (Pro or Premium). You agree to pay all applicable fees and taxes. Subscriptions are billed on a recurring basis and can be canceled at any time, with access continuing until the end of the current billing period.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">6. Termination</h2>
+          <p>We may terminate or suspend your account immediately, without prior notice or liability, if you breach the Terms, including but not limited to providing false information or engaging in fraudulent activity.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">7. Disclaimer of Warranties</h2>
+          <p>The Hub is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the Hub will be uninterrupted, secure, or error-free.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">8. Governing Law</h2>
+          <p>These Terms shall be governed and construed in accordance with the laws of Singapore, without regard to its conflict of law provisions.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">9. Contact Information</h2>
+          <p>If you have any questions about these Terms, please contact us at:</p>
+          <p class="font-semibold mt-2">Minerva Metrics Pte. Ltd.</p>
+          <p>160 Robinson Road, #14-04 Singapore 068914</p>
+          <p>Email: <a href="mailto:contact@minervametrics.com" class="text-purple-600 hover:text-purple-800">contact@minervametrics.com</a></p>
+        </section>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

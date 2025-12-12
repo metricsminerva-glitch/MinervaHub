@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <div class="flex items-center space-x-3 mb-2">
+          <h1 class="text-4xl font-bold"><%= agency.agency_name %></h1>
+          <% if (agency.subscription_tier === 'premium') { %>
+            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">
+              <i class="fas fa-crown"></i> Elite Partner
+            </span>
+          <% } else if (agency.subscription_tier === 'pro') { %>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+              Pro
+            </span>
+          <% } %>
+        </div>
+
+        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+          <% if (agency.location) { %>
+            <span><i class="fas fa-map-marker-alt"></i> <%= agency.location %></span>
+          <% } %>
+          <% if (agency.website) { %>
+            <span>
+              <i class="fas fa-globe"></i> 
+              <a href="<%= agency.website %>" target="_blank" class="text-blue-600 hover:underline"><%= agency.website %></a>
+            </span>
+          <% } %>
+        </div>
+
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="flex text-yellow-500">
+            <% for (let i = 1; i <= 5; i++) { %>
+              <i class="fas fa-star <%= i <= Math.round(agency.rating_average) ? '' : 'text-gray-300' %>"></i>
+            <% } %>
+          </div>
+          <span class="text-lg font-bold"><%= agency.rating_average.toFixed(1) %></span>
+          <span class="text-gray-600">(<%= agency.rating_count %> reviews)</span>
+        </div>
+
+        <!-- Badges -->
+        <% if (badges.length > 0) { %>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <% badges.forEach(badge => { %>
+              <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">
+                <i class="fas fa-award"></i> <%= badge %>
+              </span>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+
+      <% if (locals.user && user.id !== agency.id) { %>
+        <a href="/reviews/create?target=<%= agency.id %>" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+          <i class="fas fa-star"></i> Leave Review
+        </a>
+      <% } %>
+    </div>
+
+    <% if (agency.description) { %>
+      <div class="mb-6">
+        <h2 class="text-xl font-bold mb-3">About</h2>
+        <p class="text-gray-700 whitespace-pre-wrap"><%= agency.description %></p>
+      </div>
+    <% } %>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <% if (agency.skills) { %>
+        <div>
+          <h3 class="font-bold mb-3">Skills</h3>
+          <div class="flex flex-wrap gap-2">
+            <% agency.skills.split(',').forEach(skill => { %>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <%= skill.trim() %>
+              </span>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <% if (agency.platforms) { %>
+        <div>
+          <h3 class="font-bold mb-3">Platforms</h3>
+          <div class="flex flex-wrap gap-2">
+            <% agency.platforms.split(',').forEach(platform => { %>
+              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                <%= platform.trim() %>
+              </span>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <% if (agency.verticals) { %>
+        <div>
+          <h3 class="font-bold mb-3">Verticals</h3>
+          <div class="flex flex-wrap gap-2">
+            <% agency.verticals.split(',').forEach(vertical => { %>
+              <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                <%= vertical.trim() %>
+              </span>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Certifications -->
+    <% const agencyCerts = agency.certifications ? JSON.parse(agency.certifications) : []; %>
+    <% if (agencyCerts.length > 0) { %>
+      <div class="mt-6 pt-6 border-t">
+        <h3 class="font-bold mb-3 text-lg flex items-center">
+          <i class="fas fa-certificate text-yellow-500 mr-2"></i>Certifications
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          <% agencyCerts.forEach(cert => { %>
+            <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold flex items-center">
+              <i class="fas fa-check-circle mr-2"></i><%= cert %>
+            </span>
+          <% }) %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Open Projects -->
+  <% if (projects.length > 0) { %>
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <h2 class="text-2xl font-bold mb-6">Open Projects</h2>
+      <div class="space-y-4">
+        <% projects.forEach(project => { %>
+          <div class="border-b pb-4">
+            <h3 class="font-bold text-lg mb-2">
+              <a href="/projects/<%= project.id %>" class="text-blue-600 hover:underline"><%= project.title %></a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-2"><%= project.description.substring(0, 150) %>...</p>
+            <p class="text-sm text-gray-500">
+              <span class="capitalize"><%= project.project_type.replace('_', ' ') %></span> • 
+              <%= new Date(project.created_at).toLocaleDateString() %>
+            </p>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- Reviews -->
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold mb-6">Reviews</h2>
+    <% if (reviews.length > 0) { %>
+      <div class="space-y-6">
+        <% reviews.forEach(review => { %>
+          <div class="border-b pb-6">
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h3 class="font-bold text-lg"><%= review.reviewer_name %></h3>
+                <div class="flex text-yellow-500 mb-2">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <i class="fas fa-star <%= i <= review.rating ? '' : 'text-gray-300' %>"></i>
+                  <% } %>
+                </div>
+              </div>
+              <span class="text-sm text-gray-500"><%= new Date(review.created_at).toLocaleDateString() %></span>
+            </div>
+            <% if (review.comment) { %>
+              <p class="text-gray-700"><%= review.comment %></p>
+            <% } %>
+            <% if (review.project_title) { %>
+              <p class="text-sm text-gray-500 mt-2">
+                <i class="fas fa-project-diagram"></i> Project: <%= review.project_title %>
+              </p>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-gray-500 text-center py-8">No reviews yet</p>
+    <% } %>
+  </div>
+<    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>
+

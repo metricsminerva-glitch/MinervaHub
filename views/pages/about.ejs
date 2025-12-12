@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl mb-4">
+          Who We Are: <span class="text-gradient">Minerva Metrics</span>
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+          Connecting agencies to collaborate safely and efficiently.
+        </p>
+      </div>
+    
+      <!-- Mission Section -->
+      <div class="mt-16">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+          <div>
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4">
+              Our Mission & Why We Exist
+            </h2>
+            <p class="mt-3 text-lg text-gray-500">
+              Minerva Metrics Hub was founded to solve a critical problem in the agency world: the need for trusted, compliant, and efficient collaboration. We exist to help agencies:
+            </p>
+            <ul class="mt-6 space-y-4">
+              <li class="flex items-start">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-share-alt text-xl text-purple-600"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-500">
+                  <span class="font-medium text-gray-900">Share Overflow Work:</span> Seamlessly pass on projects that exceed your capacity to vetted partners.
+                </p>
+              </li>
+              <li class="flex items-start">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-chart-line text-xl text-blue-600"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-500">
+                  <span class="font-medium text-gray-900">Scale Quickly:</span> Access specialized expertise and resources without the overhead of permanent hiring.
+                </p>
+              </li>
+              <li class="flex items-start">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-shield-alt text-xl text-cyan-600"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-500">
+                  <span class="font-medium text-gray-900">Reduce Risk:</span> Collaborate under a transparent, compliant framework that protects all parties.
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-10 lg:mt-0 p-6 bg-purple-50 rounded-xl shadow-inner border border-purple-200">
+            <p class="text-lg text-purple-800 font-medium italic">"The future of agency growth is not competition, but collaboration. Minerva Metrics Hub is the trusted platform to make that happen."</p>
+            <p class="text-sm text-purple-600 mt-2 text-right">- The Minerva Team</p>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Values Section -->
+      <div class="mt-24">
+        <h2 class="text-center text-3xl font-extrabold text-gray-900 sm:text-4xl mb-12">
+          Our Core Values
+        </h2>
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Value 1 -->
+          <div class="p-6 bg-gray-50 rounded-xl shadow-lg text-center border border-gray-200">
+            <i class="fas fa-eye text-4xl text-purple-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Transparency</h3>
+            <p class="text-gray-500">Open communication and clear expectations are the foundation of every partnership.</p>
+          </div>
+          <!-- Value 2 -->
+          <div class="p-6 bg-gray-50 rounded-xl shadow-lg text-center border border-gray-200">
+            <i class="fas fa-hand-holding-heart text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Trust</h3>
+            <p class="text-gray-500">Vetting and a robust review system ensure you only work with reliable, verified partners.</p>
+          </div>
+          <!-- Value 3 -->
+          <div class="p-6 bg-gray-50 rounded-xl shadow-lg text-center border border-gray-200">
+            <i class="fas fa-rocket text-4xl text-cyan-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Growth</h3>
+            <p class="text-gray-500">We empower agencies to expand their capabilities and client base through collaboration.</p>
+          </div>
+          <!-- Value 4 -->
+          <div class="p-6 bg-gray-50 rounded-xl shadow-lg text-center border border-gray-200">
+            <i class="fas fa-balance-scale text-4xl text-purple-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Compliance</h3>
+            <p class="text-gray-500">Providing a compliant framework for secure and ethical project sharing.</p>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Company Details -->
+      <div class="mt-24 text-center p-8 bg-gray-100 rounded-xl shadow-lg border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          Minerva Metrics Pte. Ltd.
+        </h2>
+        <p class="text-lg text-gray-600">
+          <i class="fas fa-map-marker-alt text-purple-600 mr-2"></i>
+          160 Robinson Road, #14-04 Singapore 068914
+        </p>
+        <p class="text-lg text-gray-600 mt-2">
+          <i class="fas fa-envelope text-blue-600 mr-2"></i>
+          <a href="mailto:contact@minervametrics.com" class="hover:text-purple-600 transition">contact@minervametrics.com</a>
+        </p>
+        <p class="text-sm text-gray-400 mt-4">
+          Founding Location: Singapore
+        </p>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

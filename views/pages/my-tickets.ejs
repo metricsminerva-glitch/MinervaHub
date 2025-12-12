@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">My Support <span class="text-gradient">Tickets</span></h1>
+        <button onclick="document.getElementById('create-ticket-modal').classList.remove('hidden')" class="py-2 px-4 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 transition">
+          <i class="fas fa-plus mr-2"></i>New Ticket
+        </button>
+      </div>
+    
+      <!-- Tickets List -->
+      <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Update</th>
+              <th scope="col" class="relative px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% if (tickets && tickets.length > 0) { %>
+              <% tickets.forEach(ticket => { %>
+                <tr class="hover:bg-gray-50 transition">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#<%= ticket.id %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><%= ticket.title %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><%= ticket.category %></td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <% let statusClass = '';
+                       if (ticket.status === 'open') statusClass = 'bg-green-100 text-green-800';
+                       else if (ticket.status === 'in_progress') statusClass = 'bg-blue-100 text-blue-800';
+                       else if (ticket.status === 'resolved') statusClass = 'bg-purple-100 text-purple-800';
+                       else statusClass = 'bg-gray-100 text-gray-800';
+                    %>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= statusClass %>">
+                      <%= ticket.status.replace('_', ' ') %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <%= new Date(ticket.updated_at).toLocaleDateString() %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="/support/tickets/<%= ticket.id %>" class="text-purple-600 hover:text-purple-900">View</a>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                  You have no support tickets yet. Click "New Ticket" to create one.
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Create Ticket Modal -->
+    <div id="create-ticket-modal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <form action="/support/tickets" method="POST">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <i class="fas fa-headset text-purple-600"></i>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    Create New Support Ticket
+                  </h3>
+                  <div class="mt-4 space-y-4">
+                    <div>
+                      <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                      <input type="text" name="title" id="title" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition">
+                    </div>
+                    <div>
+                      <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                      <select name="category" id="category" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition">
+                        <option value="Technical Support">Technical Support</option>
+                        <option value="Billing/Subscription">Billing/Subscription</option>
+                        <option value="Partner Issue">Partner Issue</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                      <textarea name="message" id="message" rows="4" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button type="submit" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                Submit Ticket
+              </button>
+              <button type="button" onclick="document.getElementById('create-ticket-modal').classList.add('hidden')" class="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

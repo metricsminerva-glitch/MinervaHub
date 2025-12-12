@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    .kpi-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+    .kpi-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    .progress-bar {
+      height: 10px;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: #e5e7eb;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.5s ease;
+    }
+    .action-tile {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .action-tile:hover {
+      border-color: #667eea;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.2);
+    }
+    .project-item {
+      background: #f9fafb;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+    }
+    .project-item:hover {
+      background: white;
+      border-color: #667eea;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <!-- HEADER AREA -->
+      <div class="mb-10">
+        <h1 class="text-4xl font-black text-gray-900 mb-2">
+          Welcome back, <span class="text-gradient"><%= agency.agency_name %></span>!
+        </h1>
+        <p class="text-lg text-gray-600">Here's what's happening with your agency today</p>
+      </div>
+
+      <!-- Status Alert -->
+      <% if (agency.status === 'pending') { %>
+        <div class="alert alert-warning mb-8">
+          <i class="fas fa-clock alert-icon"></i>
+          <div class="alert-content">
+            <h3 class="font-bold text-lg mb-1">Pending Approval</h3>
+            <p>Your agency profile is awaiting admin approval. You'll be able to access all features once approved.</p>
+          </div>
+        </div>
+      <% } else if (agency.status === 'rejected') { %>
+        <div class="alert alert-error mb-8">
+          <i class="fas fa-times-circle alert-icon"></i>
+          <div class="alert-content">
+            <h3 class="font-bold text-lg mb-1">Application Rejected</h3>
+            <p>Your agency application has been rejected. Please contact support for more information.</p>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- FIRST ROW — KEY METRICS CARDS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        
+        <!-- Projects Created -->
+        <div class="kpi-card">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-project-diagram text-xl text-indigo-600"></i>
+            </div>
+          </div>
+          <div class="text-4xl font-black text-gray-900 mb-1"><%= stats.projects %></div>
+          <div class="text-sm font-semibold text-gray-600">Projects Created</div>
+        </div>
+
+        <!-- Responses Sent -->
+        <div class="kpi-card">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-reply text-xl text-emerald-600"></i>
+            </div>
+          </div>
+          <div class="text-4xl font-black text-gray-900 mb-1"><%= stats.responses %></div>
+          <div class="text-sm font-semibold text-gray-600">Responses Sent</div>
+        </div>
+
+        <!-- Average Rating -->
+        <div class="kpi-card">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-star text-xl text-amber-600"></i>
+            </div>
+          </div>
+          <div class="text-4xl font-black text-gray-900 mb-1"><%= agency.rating_average.toFixed(1) %></div>
+          <div class="text-sm font-semibold text-gray-600">Average Rating</div>
+          <div class="text-xs text-gray-500 mt-1"><%= agency.rating_count %> reviews</div>
+        </div>
+
+        <!-- Subscription Plan -->
+        <div class="kpi-card">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-crown text-xl text-purple-600"></i>
+            </div>
+          </div>
+          <div class="text-3xl font-black text-gray-900 mb-1 capitalize"><%= agency.subscription_tier %></div>
+          <div class="text-sm font-semibold text-gray-600">Subscription Plan</div>
+        </div>
+
+      </div>
+
+      <!-- SECOND ROW — USAGE + SUBSCRIPTION -->
+      <% if (agency.subscription_tier === 'free') { %>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          
+          <!-- A) Usage Overview -->
+          <div class="bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Monthly Usage</h3>
+            <p class="text-gray-600 mb-6">Track your free plan limits</p>
+            
+            <div class="space-y-6">
+              <!-- Projects Progress -->
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-semibold text-gray-700">Projects</span>
+                  <span class="text-lg font-black text-indigo-600"><%= agency.projects_created_this_month %> / 1</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill bg-indigo-600" style="width: <%= Math.min((agency.projects_created_this_month / 1) * 100, 100) %>%"></div>
+                </div>
+                <% if (agency.projects_created_this_month >= 1) { %>
+                  <p class="text-sm text-red-600 mt-2 font-semibold flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Limit reached
+                  </p>
+                <% } else { %>
+                  <p class="text-sm text-gray-500 mt-2">
+                    <%= 1 - agency.projects_created_this_month %> project(s) remaining this month
+                  </p>
+                <% } %>
+              </div>
+
+              <!-- Responses Progress -->
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-semibold text-gray-700">Responses</span>
+                  <span class="text-lg font-black text-emerald-600"><%= agency.responses_sent_this_month %> / 5</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill bg-emerald-500" style="width: <%= Math.min((agency.responses_sent_this_month / 5) * 100, 100) %>%"></div>
+                </div>
+                <% if (agency.responses_sent_this_month >= 5) { %>
+                  <p class="text-sm text-red-600 mt-2 font-semibold flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Limit reached
+                  </p>
+                <% } else { %>
+                  <p class="text-sm text-gray-500 mt-2">
+                    <%= 5 - agency.responses_sent_this_month %> response(s) remaining this month
+                  </p>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- B) Subscription Plan -->
+          <div class="bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Subscription Plan</h3>
+            <p class="text-gray-600 mb-6">You're currently on the Free plan</p>
+            
+            <div class="bg-gradient-to-r from-purple-50 to-cyan-50 rounded-lg p-6 mb-6 border border-purple-200">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-lg font-bold text-gray-900">Free Plan</span>
+                <span class="badge badge-secondary">Current</span>
+              </div>
+              
+              <ul class="space-y-3 text-sm text-gray-700">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mr-3 mt-0.5"></i>
+                  <span>1 project per month</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mr-3 mt-0.5"></i>
+                  <span>5 responses per month</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-lock text-gray-400 mr-3 mt-0.5"></i>
+                  <span class="text-gray-500">Unlimited projects (Pro)</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-lock text-gray-400 mr-3 mt-0.5"></i>
+                  <span class="text-gray-500">Enhanced visibility (Pro)</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-lock text-gray-400 mr-3 mt-0.5"></i>
+                  <span class="text-gray-500">Premium badge (Premium)</span>
+                </li>
+              </ul>
+            </div>
+
+            <a 
+              href="/subscriptions/checkout/pro" 
+              class="block w-full py-3 px-6 text-center text-white font-bold rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5"
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #06b6d4 100%);"
+            >
+              <i class="fas fa-rocket mr-2"></i>Upgrade to Pro
+            </a>
+          </div>
+
+        </div>
+      <% } %>
+
+      <!-- THIRD ROW — QUICK ACTIONS -->
+      <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Create Project -->
+          <a href="/projects/create" class="action-tile group">
+            <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-600 transition-all">
+              <i class="fas fa-plus-circle text-3xl text-indigo-600 group-hover:text-white transition-all"></i>
+            </div>
+            <h4 class="font-bold text-lg text-gray-900 mb-2">Create Project</h4>
+            <p class="text-sm text-gray-600">Post a new collaboration opportunity</p>
+          </a>
+
+          <!-- Browse Projects -->
+          <a href="/projects" class="action-tile group">
+            <div class="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-500 transition-all">
+              <i class="fas fa-search text-3xl text-emerald-600 group-hover:text-white transition-all"></i>
+            </div>
+            <h4 class="font-bold text-lg text-gray-900 mb-2">Browse Projects</h4>
+            <p class="text-sm text-gray-600">Find collaboration opportunities</p>
+          </a>
+
+          <!-- Edit Profile -->
+          <a href="/profile/edit" class="action-tile group">
+            <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition-all">
+              <i class="fas fa-user-edit text-3xl text-purple-600 group-hover:text-white transition-all"></i>
+            </div>
+            <h4 class="font-bold text-lg text-gray-900 mb-2">Edit Profile</h4>
+            <p class="text-sm text-gray-600">Update your agency information</p>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Certifications Preview -->
+      <% const dashCerts = agency.certifications ? JSON.parse(agency.certifications) : []; %>
+      <% if (dashCerts.length > 0) { %>
+        <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <i class="fas fa-certificate text-emerald-500 mr-3"></i>Your Certifications
+          </h3>
+          <div class="flex flex-wrap gap-3 mb-4">
+            <% dashCerts.forEach(cert => { %>
+              <span class="badge badge-success">
+                <i class="fas fa-check-circle mr-2"></i><%= cert %>
+              </span>
+            <% }) %>
+          </div>
+          <a href="/profile/edit" class="text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center">
+            <i class="fas fa-edit mr-2"></i>Manage Certifications
+          </a>
+        </div>
+      <% } %>
+
+      <!-- FOURTH ROW — RECENT PROJECTS -->
+      <div class="bg-white rounded-xl shadow-md p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold text-gray-900">Recent Projects</h3>
+          <a href="/projects/my" class="text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center">
+            View All <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <% if (recentProjects.length > 0) { %>
+          <div class="space-y-4">
+            <% recentProjects.forEach(project => { %>
+              <div class="project-item">
+                <div class="flex justify-between items-start gap-4">
+                  <div class="flex-1">
+                    <h4 class="font-bold text-lg mb-2">
+                      <a href="/projects/<%= project.id %>" class="text-gray-900 hover:text-indigo-600 transition"><%= project.title %></a>
+                    </h4>
+                    <p class="text-gray-600 mb-3 text-sm leading-relaxed line-clamp-2">
+                      <%= project.description.substring(0, 120) %><%= project.description.length > 120 ? '...' : '' %>
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-sm">
+                      <span class="badge badge-primary capitalize">
+                        <i class="fas fa-tag mr-1"></i><%= project.project_type.replace('_', ' ') %>
+                      </span>
+                      <span class="flex items-center text-gray-500">
+                        <i class="fas fa-calendar mr-2"></i>
+                        <%= new Date(project.created_at).toLocaleDateString() %>
+                      </span>
+                    </div>
+                  </div>
+                  <span class="badge <%= project.status === 'open' ? 'badge-success' : 'badge-secondary' %> shrink-0">
+                    <%= project.status %>
+                  </span>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-16">
+            <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-folder-open text-4xl text-indigo-600"></i>
+            </div>
+            <p class="text-xl font-semibold text-gray-900 mb-2">No projects yet</p>
+            <p class="text-gray-600 mb-6">Get started by creating your first collaboration project</p>
+            <a href="/projects/create" class="btn btn-primary inline-block">
+              <i class="fas fa-plus mr-2"></i>Create Your First Project
+            </a>
+          </div>
+        <% } %>
+      </div>
+
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>

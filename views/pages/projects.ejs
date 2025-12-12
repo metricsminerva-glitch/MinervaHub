@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    .project-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .project-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    .filter-bar {
+      background: linear-gradient(to bottom, #ffffff, #f9fafb);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <!-- Header -->
+    <div class="bg-white border-b border-gray-200 py-8 mb-8">
+      <div class="max-w-screen-xl mx-auto px-6 md:px-10">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 class="text-4xl font-black text-gray-900 mb-2">
+              Project <span class="text-gradient">Marketplace</span>
+            </h1>
+            <p class="text-lg text-gray-600">Discover collaboration opportunities from agencies worldwide</p>
+          </div>
+          <% if (locals.user && user.status === 'approved') { %>
+            <a href="/projects/create" class="btn btn-primary whitespace-nowrap px-6 py-3 shadow-md hover:shadow-lg">
+              <i class="fas fa-plus mr-2"></i>Create Project
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 md:px-10 pb-12">
+      
+      <!-- Enhanced Filter Bar -->
+      <div class="filter-bar rounded-xl p-8 mb-10">
+        <form method="GET" action="/projects" class="grid md:grid-cols-3 gap-6">
+          <div>
+            <label class="form-label flex items-center">
+              <i class="fas fa-chart-line mr-2 text-emerald-600"></i>
+              <span class="font-semibold">Platform</span>
+            </label>
+            <select name="platform" class="form-select mt-2">
+              <option value="">All Platforms</option>
+              <option value="Google" <%= selectedPlatform === 'Google' ? 'selected' : '' %>>Google</option>
+              <option value="Meta" <%= selectedPlatform === 'Meta' ? 'selected' : '' %>>Meta</option>
+              <option value="TikTok" <%= selectedPlatform === 'TikTok' ? 'selected' : '' %>>TikTok</option>
+              <option value="LinkedIn" <%= selectedPlatform === 'LinkedIn' ? 'selected' : '' %>>LinkedIn</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label flex items-center">
+              <i class="fas fa-project-diagram mr-2 text-indigo-600"></i>
+              <span class="font-semibold">Project Type</span>
+            </label>
+            <select name="type" class="form-select mt-2">
+              <option value="">All Types</option>
+              <option value="collaboration" <%= selectedType === 'collaboration' ? 'selected' : '' %>>Collaboration</option>
+              <option value="overflow" <%= selectedType === 'overflow' ? 'selected' : '' %>>Overflow</option>
+              <option value="shared_account" <%= selectedType === 'shared_account' ? 'selected' : '' %>>Shared Account</option>
+              <option value="joint_venture" <%= selectedType === 'joint_venture' ? 'selected' : '' %>>Joint Venture</option>
+              <option value="other" <%= selectedType === 'other' ? 'selected' : '' %>>Other</option>
+            </select>
+          </div>
+
+          <div class="flex items-end">
+            <button type="submit" class="btn btn-primary w-full py-3">
+              <i class="fas fa-filter mr-2"></i>Apply Filters
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Projects Grid -->
+      <% if (projects.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 <%= projects.length === 1 ? 'place-items-center' : '' %>">
+          <% projects.forEach(project => { %>
+            <div class="project-card">
+              <div class="flex-1 space-y-4">
+                
+                <!-- Title and Badges -->
+                <div>
+                  <h2 class="text-xl font-bold mb-3">
+                    <a href="/projects/<%= project.id %>" class="text-gray-900 hover:text-indigo-600 transition line-clamp-2"><%= project.title %></a>
+                  </h2>
+                  <div class="flex flex-wrap gap-2">
+                    <% if (project.hide_identity === 1) { %>
+                      <span class="badge badge-secondary text-xs">
+                        <i class="fas fa-eye-slash mr-1"></i>Hidden
+                      </span>
+                    <% } %>
+                    <% if (project.subscription_tier === 'premium') { %>
+                      <span class="badge badge-premium text-xs">
+                        <i class="fas fa-crown mr-1"></i>Elite
+                      </span>
+                    <% } else if (project.subscription_tier === 'pro') { %>
+                      <span class="badge badge-primary text-xs">
+                        <i class="fas fa-star mr-1"></i>Pro
+                      </span>
+                    <% } %>
+                  </div>
+                </div>
+                
+                <!-- Description -->
+                <p class="text-gray-600 leading-relaxed text-sm line-clamp-3">
+                  <%= project.description.substring(0, 150) %><%= project.description.length > 150 ? '...' : '' %>
+                </p>
+                
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-primary capitalize text-xs">
+                    <i class="fas fa-tag mr-1"></i><%= project.project_type.replace('_', ' ') %>
+                  </span>
+                  <% if (project.platforms_involved) { %>
+                    <% project.platforms_involved.split(',').slice(0, 2).forEach(platform => { %>
+                      <span class="badge badge-info text-xs">
+                        <i class="fas fa-chart-line mr-1"></i><%= platform.trim() %>
+                      </span>
+                    <% }) %>
+                  <% } %>
+                  <% if (project.budget_range) { %>
+                    <span class="badge badge-success text-xs">
+                      <i class="fas fa-dollar-sign mr-1"></i><%= project.budget_range %>
+                    </span>
+                  <% } %>
+                </div>
+
+                <!-- Certifications -->
+                <% const projAgencyCerts = project.certifications ? JSON.parse(project.certifications) : []; %>
+                <% if (projAgencyCerts.length > 0) { %>
+                  <div class="flex flex-wrap gap-2">
+                    <% projAgencyCerts.slice(0, 2).forEach(cert => { %>
+                      <span class="badge badge-success-outline badge-sm text-xs">
+                        <i class="fas fa-certificate mr-1"></i><%= cert %>
+                      </span>
+                    <% }) %>
+                    <% if (projAgencyCerts.length > 2) { %>
+                      <span class="badge badge-sm badge-secondary text-xs">
+                        +<%= projAgencyCerts.length - 2 %>
+                      </span>
+                    <% } %>
+                  </div>
+                <% } %>
+
+                <!-- Divider -->
+                <div class="border-t border-gray-100 pt-4 mt-auto">
+                  <!-- Meta Info -->
+                  <div class="space-y-2 text-sm text-gray-600 mb-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-building mr-2 text-indigo-600 w-4"></i>
+                      <% if (project.is_hidden) { %>
+                        <span class="font-semibold text-gray-700">Agency Hidden</span>
+                      <% } else { %>
+                        <a href="/agencies/<%= project.agency_id %>" class="hover:text-indigo-600 font-semibold"><%= project.agency_name %></a>
+                      <% } %>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="flex items-center">
+                        <i class="fas fa-star mr-1 text-amber-500 w-4"></i>
+                        <span class="font-semibold"><%= project.rating_average.toFixed(1) %></span>
+                      </span>
+                      <span class="flex items-center text-xs">
+                        <i class="fas fa-calendar mr-1 text-emerald-600"></i>
+                        <%= new Date(project.created_at).toLocaleDateString() %>
+                      </span>
+                    </div>
+                    <% if (project.deadline) { %>
+                      <div class="flex items-center text-xs">
+                        <i class="fas fa-clock mr-2 text-red-600 w-4"></i>
+                        <span class="font-semibold">Deadline:</span>
+                        <span class="ml-1"><%= new Date(project.deadline).toLocaleDateString() %></span>
+                      </div>
+                    <% } %>
+                  </div>
+
+                  <!-- Action Button -->
+                  <a href="/projects/<%= project.id %>" class="btn btn-primary w-full text-center text-sm py-2">
+                    View Details <i class="fas fa-arrow-right ml-2"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <!-- Enhanced Empty State -->
+        <div class="bg-white rounded-xl shadow-md p-16 text-center">
+          <div class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-inbox text-5xl text-indigo-600"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">No projects found</h3>
+          <p class="text-gray-600 mb-6 max-w-md mx-auto">
+            Adjust your filters or create a new collaboration opportunity to get started.
+          </p>
+          <% if (locals.user && user.status === 'approved') { %>
+            <a href="/projects/create" class="btn btn-primary inline-block px-8 py-3">
+              <i class="fas fa-plus mr-2"></i>Create Project
+            </a>
+          <% } %>
+        </div>
+      <% } %>
+      
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>

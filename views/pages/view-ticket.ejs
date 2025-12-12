@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Ticket #<%= ticket.id %>: <span class="text-gradient"><%= ticket.title %></span></h1>
+        <% let statusClass = '';
+           if (ticket.status === 'open') statusClass = 'bg-green-100 text-green-800';
+           else if (ticket.status === 'in_progress') statusClass = 'bg-blue-100 text-blue-800';
+           else if (ticket.status === 'resolved') statusClass = 'bg-purple-100 text-purple-800';
+           else statusClass = 'bg-gray-100 text-gray-800';
+        %>
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full <%= statusClass %>">
+          <%= ticket.status.replace('_', ' ') %>
+        </span>
+      </div>
+    
+      <!-- Ticket Details -->
+      <div class="bg-white shadow-lg rounded-xl p-6 mb-8 border border-gray-100">
+        <div class="grid grid-cols-2 gap-4 text-gray-600">
+          <div>
+            <p class="font-medium text-gray-900">Category:</p>
+            <p><%= ticket.category %></p>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Created:</p>
+            <p><%= new Date(ticket.created_at).toLocaleString() %></p>
+          </div>
+        </div>
+        <div class="mt-4 border-t pt-4">
+          <p class="font-medium text-gray-900 mb-2">Initial Message:</p>
+          <p class="whitespace-pre-wrap bg-gray-50 p-4 rounded-lg"><%= ticket.message %></p>
+        </div>
+      </div>
+    
+      <!-- Responses -->
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Conversation History</h2>
+      <div class="space-y-6">
+        <% responses.forEach(response => { %>
+          <% const isAgency = response.user_type === 'agency'; %>
+          <div class="flex <%= isAgency ? 'justify-end' : 'justify-start' %>">
+            <div class="max-w-lg w-full">
+              <div class="text-xs mb-1 <%= isAgency ? 'text-right text-purple-600' : 'text-left text-gray-500' %>">
+                <%= isAgency ? 'You' : 'Admin' %> • <%= new Date(response.created_at).toLocaleString() %>
+              </div>
+              <div class="p-4 rounded-xl shadow-md <%= isAgency ? 'bg-purple-50 text-gray-800 border border-purple-200' : 'bg-white text-gray-800 border border-gray-200' %>">
+                <p class="whitespace-pre-wrap"><%= response.message %></p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    
+      <!-- Reply Form -->
+      <% if (ticket.status !== 'resolved' && ticket.status !== 'closed') { %>
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Reply to Ticket</h2>
+          <form action="/support/tickets/<%= ticket.id %>/respond" method="POST" class="space-y-4">
+            <div>
+              <textarea name="message" id="message" rows="4" required placeholder="Type your response here..." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition"></textarea>
+            </div>
+            <button type="submit" class="py-2 px-4 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition">
+              Send Response
+            </button>
+          </form>
+        </div>
+      <% } else { %>
+        <div class="mt-8 pt-8 border-t border-gray-200 text-center">
+          <p class="text-xl text-gray-500">This ticket is <%= ticket.status %>. No further replies can be sent.</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

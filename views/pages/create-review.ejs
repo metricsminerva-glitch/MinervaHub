@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-3xl font-bold mb-6">Leave a Review</h1>
+
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+      <p class="text-sm text-gray-700">
+        <strong>Reviewing:</strong> <%= targetAgency.agency_name %>
+      </p>
+    </div>
+
+    <form action="/reviews/create" method="POST" class="space-y-6">
+      <input type="hidden" name="target_agency_id" value="<%= targetAgency.id %>">
+      <input type="hidden" name="project_id" value="<%= projectId || '' %>">
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Rating *</label>
+        <div class="flex space-x-2">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <label class="cursor-pointer">
+              <input type="radio" name="rating" value="<%= i %>" required class="hidden peer">
+              <i class="fas fa-star text-3xl text-gray-300 peer-checked:text-yellow-500 hover:text-yellow-400"></i>
+            </label>
+          <% } %>
+        </div>
+        <p class="text-sm text-gray-500 mt-2">Click to rate from 1 to 5 stars</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Comment</label>
+        <textarea name="comment" rows="6" 
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Share your experience working with this agency..."></textarea>
+      </div>
+
+      <div class="flex space-x-4">
+        <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+          <i class="fas fa-paper-plane"></i> Submit Review
+        </button>
+        <a href="/agencies/<%= targetAgency.id %>" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+    </div>
+
+<script>
+// Make star rating interactive
+document.querySelectorAll('input[name="rating"]').forEach(input => {
+  input.addEventListener('change', function() {
+    const value = this.value;
+    document.querySelectorAll('input[name="rating"]').forEach((radio, index) => {
+      const star = radio.nextElementSibling;
+      if (index < value) {
+        star.classList.remove('text-gray-300');
+        star.classList.add('text-yellow-500');
+      } else {
+        star.classList.remove('text-yellow-500');
+        star.classList.add('text-gray-300');
+      }
+    });
+  });
+});
+</script>
+
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>
+

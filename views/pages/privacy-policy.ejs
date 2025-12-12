@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl mb-4">
+          Privacy Policy
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+          Last Updated: December 1, 2025
+        </p>
+      </div>
+    
+      <!-- Policy Content Section -->
+      <div class="mt-16 space-y-8 text-gray-700">
+        <p>This Privacy Policy describes how Minerva Metrics Hub ("we," "our," or "the Company") collects, uses, and discloses the personal information of users ("User" or "you") who use our website and related services (collectively, the "Services").</p>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">1. Information We Collect</h2>
+          <p>We collect information in several ways, including:</p>
+
+          <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.1. Information You Provide Directly</h3>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>**Registration Data:** When you register an agency, we collect the agency name, contact name, email address, password (stored encrypted), and other profile details (website, location, description, skills, platforms, verticals).</li>
+            <li>**Support and Communication Data:** We collect information you provide when you contact us for support or submit a ticket (e.g., through the support ticket system).</li>
+            <li>**Payment Data:** If you subscribe to a paid plan, we collect billing and transaction data (handled via a third-party payment processor like Stripe; we do not store full credit card details).</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.2. Information Collected Automatically</h3>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>**Usage Data:** We collect information about how you access and use the Services, including IP addresses, browser type, pages visited, time spent on pages, and navigation paths.</li>
+            <li>**Cookies and Similar Technologies:** We use cookies and tracking technologies to track activity on our Services and hold certain information.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">2. How We Use the Information</h2>
+          <p>We use the collected information for various purposes:</p>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>**Provide and Maintain Services:** To manage your account, provide marketplace access, process transactions, and maintain platform functionality.</li>
+            <li>**Improve Services:** To analyze usage and trends to enhance the user experience and develop new features.</li>
+            <li>**Communication:** To send you account-related notifications, Service updates, responses to support tickets, and, if you have consented, marketing communications.</li>
+            <li>**Security and Fraud Prevention:** To protect our Services and Users from fraudulent or unauthorized activity.</li>
+            <li>**Legal Compliance:** To comply with legal obligations and respond to legal requests.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">3. Sharing of Information</h2>
+          <p>We may share your personal information in the following circumstances:</p>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>**With Other Users:** Your agency profile information (name, description, skills, etc.) is visible to other Users on the marketplace to facilitate collaboration.</li>
+            <li>**Service Providers:** We share information with third-party service providers who perform services on our behalf, such as payment processing (Stripe), hosting, and data analytics.</li>
+            <li>**For Legal Obligations:** We may disclose your information if required by law or in response to valid legal processes.</li>
+            <li>**Business Transfers:** In connection with a merger, acquisition, or sale of all or a portion of our assets.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">4. Your Privacy Rights</h2>
+          <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+          <ul class="list-disc list-inside ml-4 space-y-2">
+            <li>**Right to Access:** Request a copy of the personal data we hold about you.</li>
+            <li>**Right to Rectification:** Request correction of inaccurate or incomplete personal data.</li>
+            <li>**Right to Erasure ("Right to be Forgotten"):** Request the deletion of your personal data, subject to certain legal exceptions.</li>
+            <li>**Right to Object:** Object to the processing of your personal data for direct marketing purposes.</li>
+          </ul>
+          <p class="mt-4">To exercise any of these rights, please contact us using the details provided in the "Contact Us" section.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">5. Data Security</h2>
+          <p>We take reasonable security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">6. Changes to This Privacy Policy</h2>
+          <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">7. Contact Us</h2>
+          <p>For questions or comments about this Privacy Policy, please contact us at:</p>
+          <p class="font-semibold mt-2">Minerva Metrics Hub</p>
+          <p>Email: <a href="mailto:privacy@minervametricshub.com" class="text-purple-600 hover:text-purple-800">privacy@minervametricshub.com</a></p>
+          <p>Address: [Fictitious Address]</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

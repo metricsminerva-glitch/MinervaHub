@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== "undefined" ? title + " - " : "" %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include("../partials/navbar") %>
+  
+  <!-- Flash Messages -->
+  <%- include("../partials/flash") %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Manage Responses</h1>
+    <a href="/admin/dashboard" class="text-blue-600 hover:underline">← Back to Dashboard</a>
+  </div>
+
+  <% if (responses.length > 0) { %>
+    <div class="space-y-4">
+      <% responses.forEach(response => { %>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="text-lg font-bold mb-2">
+                Response to: <a href="/projects/<%= response.project_id %>" target="_blank" class="text-blue-600 hover:underline"><%= response.project_title %></a>
+              </h3>
+
+              <p class="text-sm text-gray-600 mb-3">
+                From: <a href="/agencies/<%= response.responder_agency_id %>" target="_blank" class="text-blue-600 hover:underline"><%= response.agency_name %></a>
+              </p>
+
+              <p class="text-gray-700 mb-3"><%= response.message %></p>
+
+              <div class="flex items-center space-x-4 text-sm text-gray-500">
+                <span><i class="fas fa-envelope"></i> <%= response.contact_email %></span>
+                <span><i class="fas fa-calendar"></i> <%= new Date(response.created_at).toLocaleDateString() %></span>
+              </div>
+            </div>
+
+            <div class="ml-4">
+              <form action="/admin/responses/<%= response.id %>/delete" method="POST" class="inline">
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm"
+                        onclick="return confirm('Delete this response?')">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="bg-white rounded-lg shadow-md p-12 text-center">
+      <p class="text-xl text-gray-500">No responses found</p>
+    </div>
+  <% } %>
+</div>
+
+  </main>
+  
+  <!-- Footer -->
+  <%- include("../partials/footer") %>
+  
+</body>
+</html>
+

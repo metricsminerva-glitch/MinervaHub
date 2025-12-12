@@ -1,0 +1,41 @@
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Contact Message: <span class="text-gradient"><%= message.subject %></span></h1>
+    <a href="/admin/contact-messages" class="py-2 px-4 bg-gray-200 text-gray-800 rounded-xl shadow-md hover:bg-gray-300 transition">
+      <i class="fas fa-arrow-left mr-2"></i>Back to Messages
+    </a>
+  </div>
+
+  <!-- Message Details -->
+  <div class="bg-white shadow-lg rounded-xl p-8 border border-gray-100">
+    <div class="grid grid-cols-2 gap-4 text-gray-600 border-b pb-4 mb-4">
+      <div>
+        <p class="font-medium text-gray-900">From:</p>
+        <p><%= message.name %></p>
+      </div>
+      <div>
+        <p class="font-medium text-gray-900">Email:</p>
+        <p><a href="mailto:<%= message.email %>" class="text-blue-600 hover:underline"><%= message.email %></a></p>
+      </div>
+      <div>
+        <p class="font-medium text-gray-900">Received:</p>
+        <p><%= new Date(message.created_at).toLocaleString() %></p>
+      </div>
+      <div>
+        <p class="font-medium text-gray-900">Status:</p>
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+          Read
+        </span>
+      </div>
+    </div>
+    
+    <div>
+      <p class="font-medium text-gray-900 mb-2">Message:</p>
+      <div class="whitespace-pre-wrap bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <%= message.message %>
+      </div>
+    </div>
+  </div>
+</div>
+

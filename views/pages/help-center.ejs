@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl">
+          Minerva Metrics <span class="text-gradient">Help Center</span>
+        </h1>
+        <p class="mt-4 text-xl text-gray-500">
+          Find answers, guides, and support resources for all your collaboration needs.
+        </p>
+      </div>
+    
+      <div class="lg:grid lg:grid-cols-12 lg:gap-x-12">
+        <!-- Sidebar Navigation -->
+        <aside class="py-6 lg:col-span-3">
+          <nav class="sticky top-24 space-y-4 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Topics</h3>
+            <a href="#getting-started" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-play-circle mr-2"></i>Getting Started
+            </a>
+            <a href="#collaboration" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-handshake mr-2"></i>How Collaboration Works
+            </a>
+            <a href="#posting-projects" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-folder-plus mr-2"></i>Posting Projects
+            </a>
+            <a href="#responding" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-reply mr-2"></i>Responding to Opportunities
+            </a>
+            <a href="#reviews" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-star mr-2"></i>Reviews & Reputation
+            </a>
+            <a href="#subscriptions" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-crown mr-2"></i>Subscription Tiers Explained
+            </a>
+            <a href="/faq" class="block text-gray-700 hover:text-purple-600 font-medium transition border-t pt-3 mt-3">
+              <i class="fas fa-question-circle mr-2"></i>FAQ
+            </a>
+            <a href="/support/tickets" class="block text-gray-700 hover:text-purple-600 font-medium transition">
+              <i class="fas fa-headset mr-2"></i>Contact Support
+            </a>
+          </nav>
+        </aside>
+    
+        <!-- Main Content -->
+        <div class="py-6 lg:col-span-9">
+          <div class="space-y-12">
+    
+            <!-- Section: Getting Started -->
+            <section id="getting-started" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">1. Getting Started</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-purple-600 mb-2">How do I register my agency?</h3>
+                  <p class="text-gray-600">
+                    Click the "Get Started" button and fill out the registration form. You will need to provide basic agency details, contact information, and a brief overview of your expertise. All agencies are subject to a quick vetting process to maintain network quality.
+                  </p>
+                </article>
+                <article>
+                  <h3 class="text-xl font-semibold text-purple-600 mb-2">What is the vetting process?</h3>
+                  <p class="text-gray-600">
+                    Our team reviews your application, focusing on your stated expertise, portfolio, and compliance history. This usually takes 24-48 hours. Once approved, you gain full access to the marketplace.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Section: How Collaboration Works -->
+            <section id="collaboration" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">2. How Collaboration Works</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-blue-600 mb-2">What types of projects can I post?</h3>
+                  <p class="text-gray-600">
+                    You can post projects for overflow work, specialized tasks (e.g., TikTok Ads, advanced SEO), shared account management, or joint ventures. The platform supports all types of agency-to-agency collaboration.
+                  </p>
+                </article>
+                <article>
+                  <h3 class="text-xl font-semibold text-blue-600 mb-2">How is payment handled?</h3>
+                  <p class="text-gray-600">
+                    Minerva Metrics Hub currently facilitates the connection and contract agreement. Payment terms are agreed upon directly between the posting and responding agencies. We recommend using a secure escrow service for large projects.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Section: Posting Projects -->
+            <section id="posting-projects" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">3. Posting Projects</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-cyan-600 mb-2">What information should I include in a project post?</h3>
+                  <p class="text-gray-600">
+                    Be as detailed as possible: project scope, required expertise (e.g., platforms, skills), budget range, and deadline. Clarity attracts the best partners.
+                  </p>
+                </article>
+                <article>
+                  <h3 class="text-xl font-semibold text-cyan-600 mb-2">Are there limits to how many projects I can post?</h3>
+                  <p class="text-gray-600">
+                    Yes, limits depend on your subscription tier. Free tier agencies can post 1 project per month, while Pro and Premium tiers have unlimited posting. See the <a href="#subscriptions" class="text-purple-600 hover:underline">Subscription Tiers Explained</a> section for details.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Section: Responding to Opportunities -->
+            <section id="responding" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">4. Responding to Opportunities</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-purple-600 mb-2">How do I submit a response?</h3>
+                  <p class="text-gray-600">
+                    On the project detail page, click "Submit Response." You will provide a brief message outlining your approach, relevant experience, and contact details.
+                  </p>
+                </article>
+                <article>
+                  <h3 class="text-xl font-semibold text-purple-600 mb-2">Can I see who posted the project?</h3>
+                  <p class="text-gray-600">
+                    Project posters remain anonymous until they choose to engage with a response, protecting their client confidentiality.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Section: Reviews & Reputation -->
+            <section id="reviews" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">5. Reviews & Reputation</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-blue-600 mb-2">How does the rating system work?</h3>
+                  <p class="text-gray-600">
+                    Agencies can rate each other (1-5 stars) after a project is completed. Your overall rating is an average of all reviews received and is crucial for attracting new partners.
+                  </p>
+                </article>
+                <article>
+                  <h3 class="text-xl font-semibold text-blue-600 mb-2">What are badges?</h3>
+                  <p class="text-gray-600">
+                    Badges are awarded for achieving milestones, such as "Elite Partner" (Premium tier) or "Top Rated" (4.5+ stars). They visually confirm your status and expertise.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Section: Subscription Tiers Explained -->
+            <section id="subscriptions" class="bg-white p-8 shadow-xl rounded-xl border border-gray-100">
+              <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">6. Subscription Tiers Explained</h2>
+              <div class="space-y-6">
+                <article>
+                  <h3 class="text-xl font-semibold text-cyan-600 mb-2">What is the difference between Free, Pro, and Premium?</h3>
+                  <p class="text-gray-600">
+                    **Free** is for testing the platform (1 project/month, 5 responses/month). **Pro** offers unlimited projects and responses. **Premium** includes all Pro features plus priority listing and the Elite Partner badge.
+                  </p>
+                </article>
+              </div>
+            </section>
+    
+            <!-- Support Links -->
+            <div class="mt-12 p-8 bg-gray-100 rounded-xl text-center border border-gray-200">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Still Need Help?</h3>
+              <div class="flex justify-center space-x-6">
+                <a href="/faq" class="btn-gradient-blue">
+                  <i class="fas fa-question-circle mr-2"></i> Visit FAQ
+                </a>
+                <a href="/support/tickets" class="btn-gradient">
+                  <i class="fas fa-headset mr-2"></i> Open Support Ticket
+                </a>
+              </div>
+            </div>
+    
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>

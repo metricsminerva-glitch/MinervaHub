@@ -1,0 +1,197 @@
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-3 group">
+          <img src="/images/logo.png" alt="Minerva Metrics" class="h-10 w-auto transition-transform group-hover:scale-105">
+          <span class="text-xl font-bold text-indigo-600 hidden sm:block">Minerva Hub</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <% if (locals.isAdmin) { %>
+          <!-- Admin Navigation -->
+          <a href="/admin/dashboard" class="nav-link">
+            <i class="fas fa-tachometer-alt mr-1"></i>Admin Dashboard
+          </a>
+          <a href="/projects" class="nav-link">
+            <i class="fas fa-briefcase mr-1"></i>Marketplace
+          </a>
+          
+          <!-- Admin Dropdown -->
+          <div class="relative group">
+            <button class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 font-medium">
+              <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                A
+              </div>
+              <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+            
+            <!-- Admin Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div class="p-4 border-b border-gray-100">
+                <p class="font-bold text-gray-900">Admin</p>
+                <p class="text-sm text-gray-500">System Administrator</p>
+              </div>
+              <div class="py-2">
+                <a href="/admin/dashboard" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
+                </a>
+                <a href="/admin/tickets" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-life-ring mr-2"></i>Support Tickets
+                </a>
+              </div>
+              <div class="border-t border-gray-100 py-2">
+                <a href="/admin/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50 transition">
+                  <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        <% } else if (locals.user) { %>
+          <!-- Agency User Navigation -->
+          <a href="/dashboard" class="nav-link">
+            <i class="fas fa-th-large mr-1"></i>Dashboard
+          </a>
+          <a href="/projects" class="nav-link">
+            <i class="fas fa-briefcase mr-1"></i>Marketplace
+          </a>
+          <a href="/profile/edit" class="nav-link">
+            <i class="fas fa-user mr-1"></i>Profile
+          </a>
+          
+          <!-- User Dropdown -->
+          <div class="relative group">
+            <button class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 font-medium">
+              <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                <%= user.agency_name ? user.agency_name.charAt(0).toUpperCase() : 'U' %>
+              </div>
+              <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div class="p-4 border-b border-gray-100">
+                <p class="font-bold text-gray-900"><%= user.agency_name %></p>
+                <p class="text-sm text-gray-500"><%= user.email %></p>
+                <% if (user.subscription_tier) { %>
+                  <span class="<%= user.subscription_tier === 'premium' ? 'badge-premium' : user.subscription_tier === 'pro' ? 'badge-pro' : 'badge-gray' %> mt-2">
+                    <%= user.subscription_tier.toUpperCase() %>
+                  </span>
+                <% } %>
+              </div>
+              <div class="py-2">
+                <a href="/projects/my" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-folder mr-2"></i>My Projects
+                </a>
+                <a href="/reviews/my" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-star mr-2"></i>My Reviews
+                </a>
+                <a href="/support/tickets" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-life-ring mr-2"></i>My Support Tickets
+                </a>
+                <a href="/profile/edit" class="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                  <i class="fas fa-cog mr-2"></i>Settings
+                </a>
+              </div>
+              <div class="border-t border-gray-100 py-2">
+                <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50 transition">
+                  <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        <% } else { %>
+          <a href="/projects" class="nav-link">
+            <i class="fas fa-briefcase mr-1"></i>Marketplace
+          </a>
+          <a href="/login" class="nav-link">
+            Login
+          </a>
+          <a href="/register" class="btn btn-primary btn-small">
+            Get Started
+          </a>
+        <% } %>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-700 hover:text-purple-600 focus:outline-none">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+    <div class="px-4 py-6 space-y-4">
+      <% if (locals.isAdmin) { %>
+        <!-- Admin Mobile Menu -->
+        <div class="pb-4 border-b border-gray-100">
+          <p class="font-bold text-gray-900">Admin</p>
+          <p class="text-sm text-gray-500">System Administrator</p>
+        </div>
+        <a href="/admin/dashboard" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
+        </a>
+        <a href="/projects" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-briefcase mr-2"></i>Marketplace
+        </a>
+        <a href="/admin/tickets" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-life-ring mr-2"></i>Support Tickets
+        </a>
+        <a href="/admin/logout" class="block text-red-600 hover:text-red-700 font-medium py-2">
+          <i class="fas fa-sign-out-alt mr-2"></i>Logout
+        </a>
+      <% } else if (locals.user) { %>
+        <!-- Agency User Mobile Menu -->
+        <div class="pb-4 border-b border-gray-100">
+          <p class="font-bold text-gray-900"><%= user.agency_name %></p>
+          <p class="text-sm text-gray-500"><%= user.email %></p>
+        </div>
+        <a href="/dashboard" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-th-large mr-2"></i>Dashboard
+        </a>
+        <a href="/projects" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-briefcase mr-2"></i>Marketplace
+        </a>
+        <a href="/projects/my" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-folder mr-2"></i>My Projects
+        </a>
+        <a href="/reviews/my" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-star mr-2"></i>My Reviews
+        </a>
+        <a href="/support/tickets" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-life-ring mr-2"></i>My Support Tickets
+        </a>
+        <a href="/profile/edit" class="block text-gray-700 hover:text-purple-600 font-medium py-2">
+          <i class="fas fa-user mr-2"></i>Profile
+        </a>
+        <a href="/logout" class="block text-red-600 hover:text-red-700 font-medium py-2">
+          <i class="fas fa-sign-out-alt mr-2"></i>Logout
+        </a>
+      <% } else { %>
+        <a href="/projects" class="block nav-link py-2">
+          <i class="fas fa-briefcase mr-2"></i>Marketplace
+        </a>
+        <a href="/login" class="block nav-link py-2">
+          Login
+        </a>
+        <a href="/register" class="block btn btn-primary text-center">
+          Get Started
+        </a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  });
+</script>

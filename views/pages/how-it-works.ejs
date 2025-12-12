@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Minerva Metrics Hub</title>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  
+  <!-- Navigation -->
+  <%- include('../partials/navbar') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl">
+          How <span class="text-gradient">Minerva Metrics Hub</span> Works
+        </h1>
+        <p class="mt-4 text-xl text-gray-500">
+          A simple, secure, 4-step process to find your next collaboration partner.
+        </p>
+      </div>
+    
+      <!-- Step-by-step Process -->
+      <div class="relative">
+        <!-- Vertical Line -->
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200 rounded-full"></div>
+    
+        <!-- Step 1: Register & Get Vetted -->
+        <div class="flex flex-col md:flex-row items-center mb-16">
+          <div class="md:w-1/2 md:pr-16 text-center md:text-right">
+            <span class="text-sm font-semibold text-purple-600 uppercase tracking-wider">Step 1</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-4">Join the Network</h2>
+            <p class="text-lg text-gray-600">
+              Agencies register and submit their profile for review. Our team vets each application to ensure a high standard of quality, compliance, and expertise within the network.
+            </p>
+            <a href="/register" class="mt-4 inline-flex items-center btn-gradient">
+              Get Vetted Today <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+          <div class="md:w-1/2 flex justify-center md:justify-start mt-6 md:mt-0">
+            <div class="w-16 h-16 rounded-full bg-purple-600 text-white flex items-center justify-center text-3xl shadow-xl ring-8 ring-purple-100">
+              <i class="fas fa-user-check"></i>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Step 2: Post or Browse Projects -->
+        <div class="flex flex-col md:flex-row-reverse items-center mb-16">
+          <div class="md:w-1/2 md:pl-16 text-center md:text-left">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Step 2</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-4">Find Opportunities</h2>
+            <p class="text-lg text-gray-600">
+              Post your overflow work or specialized project needs to the marketplace. Alternatively, browse projects posted by other agencies that match your skills and capacity.
+            </p>
+            <a href="/projects" class="mt-4 inline-flex items-center btn-gradient-blue">
+              Browse Marketplace <i class="fas fa-briefcase ml-2"></i>
+            </a>
+          </div>
+          <div class="md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+            <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center text-3xl shadow-xl ring-8 ring-blue-100">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Step 3: Secure Collaboration -->
+        <div class="flex flex-col md:flex-row items-center mb-16">
+          <div class="md:w-1/2 md:pr-16 text-center md:text-right">
+            <span class="text-sm font-semibold text-cyan-600 uppercase tracking-wider">Step 3</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-4">Connect & Contract</h2>
+            <p class="text-lg text-gray-600">
+              Use our secure messaging system to discuss project details. Once aligned, our platform provides the framework for compliant, transparent, and secure contract finalization.
+            </p>
+            <a href="/contact" class="mt-4 inline-flex items-center btn-gradient-cyan">
+              Contact Sales <i class="fas fa-envelope ml-2"></i>
+            </a>
+          </div>
+          <div class="md:w-1/2 flex justify-center md:justify-start mt-6 md:mt-0">
+            <div class="w-16 h-16 rounded-full bg-cyan-600 text-white flex items-center justify-center text-3xl shadow-xl ring-8 ring-cyan-100">
+              <i class="fas fa-handshake"></i>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Step 4: Review & Grow -->
+        <div class="flex flex-col md:flex-row-reverse items-center">
+          <div class="md:w-1/2 md:pl-16 text-center md:text-left">
+            <span class="text-sm font-semibold text-purple-600 uppercase tracking-wider">Step 4</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-4">Build Your Reputation</h2>
+            <p class="text-lg text-gray-600">
+              After project completion, leave a review for your partner. Our transparent rating system helps you build a strong reputation, leading to more high-value collaborations.
+            </p>
+            <a href="/reviews/my" class="mt-4 inline-flex items-center btn-gradient">
+              View My Reviews <i class="fas fa-star ml-2"></i>
+            </a>
+          </div>
+          <div class="md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+            <div class="w-16 h-16 rounded-full bg-purple-600 text-white flex items-center justify-center text-3xl shadow-xl ring-8 ring-purple-100">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- CTA Section -->
+      <div class="mt-24 text-center bg-gray-100 p-12 rounded-2xl shadow-xl border border-gray-200">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Ready to Elevate Your Agency?</h2>
+        <p class="text-xl text-gray-600 mb-8">
+          Join the network of top-tier marketing agencies today and unlock new growth opportunities.
+        </p>
+        <a href="/register" class="btn-gradient-lg">
+          Start Collaborating Now
+        </a>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <p class="text-sm">
+        We use cookies to ensure you get the best experience on our Hub. By clicking "Accept," you agree to our <a href="/cookies" class="text-purple-400 hover:text-purple-300 underline">Cookie Policy</a>.
+      </p>
+      <div class="flex space-x-3">
+        <button id="accept-cookies" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Accept
+        </button>
+        <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cookie Banner Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const declineButton = document.getElementById('decline-cookies');
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    if (!getCookie('cookie_consent')) {
+      cookieBanner.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'accepted', 365);
+      cookieBanner.classList.add('hidden');
+    });
+
+    declineButton.addEventListener('click', () => {
+      setCookie('cookie_consent', 'declined', 365);
+      cookieBanner.classList.add('hidden');
+      // Optional: Add logic to disable non-essential scripts here
+    });
+  </script>
+</body>
+</html>
